@@ -57,7 +57,7 @@ const Layout = (props) => {
               </Button>
             </InnerContainer>
           </NavContainer>
-          <Body>
+          <Body dark={value.dark}>
             <SideNav />
             {props.children}
           </Body>

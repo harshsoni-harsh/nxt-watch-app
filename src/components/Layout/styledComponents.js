@@ -34,7 +34,7 @@ export const NavContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 15px 25px;
-  background-color: ${(props) => (props.dark ? "black" : "white")};
+  background-color: ${(props) => (props.dark ? "#181818" : "white")};
 `;
 export const InnerContainer = styled.div`
   display: flex;
@@ -51,4 +51,5 @@ export const OuterContainer = styled.div`
 `;
 export const Body = styled.div`
   display: flex;
+  ${props => props.dark ? "background-color: #181818;" : ""}
 `;
