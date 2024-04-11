@@ -7,7 +7,7 @@ export const OuterContainer = styled.div`
   width: fit-content;
   padding: 20px 0px 20px 0;
   max-width: 250px;
-  min-height: calc(100vh - 100px);
+  flex-grow: 1;
   @media (max-width: 767px) {
     display: none;
   }
@@ -33,7 +33,7 @@ export const NavTab = styled.a`
     props.selected && props.dark
       ? "background-color: #343434; color: #ff0b37; font-weight: bold;"
       : props.selected
-      ? "background-color: #e2e8f0;"
+      ? "background-color: #e2e8f0; color: #ff0b37; font-weight: bold;"
       : props.dark
       ? ""
       : ""}

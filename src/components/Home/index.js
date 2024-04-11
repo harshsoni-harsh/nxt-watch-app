@@ -19,6 +19,7 @@ import {
 
 import ThemeContext from "../../context/ThemeContext";
 import VideoCard from "../VideoCard";
+import Layout from "../Layout";
 
 const apiStatusConstants = {
   initial: "INITIAL",
@@ -31,48 +32,7 @@ class Home extends Component {
   state = {
     popupOpen: true,
     searchVal: "",
-    searchResults: [
-      {
-        channel: {
-          name: "CyberEye",
-          profileImageUrl:
-            "https://assets.ccbp.in/frontend/react-js/nxt-watch/cyber-eye-img.png",
-        },
-        id: "330f1c47-2608-452a-ad65-e0d9b159d00c",
-        publishedAt: "Apr 23, 2020",
-        thumbnailUrl:
-          "https://assets.ccbp.in/frontend/react-js/nxt-watch/things-conference-2-img.png",
-        title: "The Things Conference India 2019 | After Movie",
-        viewCount: "23K",
-      },
-      {
-        channel: {
-          name: "CyberEye",
-          profileImageUrl:
-            "https://assets.ccbp.in/frontend/react-js/nxt-watch/cyber-eye-img.png",
-        },
-        id: "9420a07a-df83-419e-a46e-ed308103e829",
-        publishedAt: "Apr 23, 2020",
-        thumbnailUrl:
-          "https://assets.ccbp.in/frontend/react-js/nxt-watch/things-conference-cyber-eye-img.png",
-        title:
-          "Avinash Dara, CyberEye | Smart Campus - A Deployment Perspective | The Things Virtual Conference",
-        viewCount: "23K",
-      },
-      {
-        channel: {
-          name: "The Things Network",
-          profileImageUrl:
-            "https://assets.ccbp.in/frontend/react-js/nxt-watch/the-things-network-img.png",
-        },
-        id: "f163fd54-0f08-4cc1-a5aa-308f27132cc6",
-        publishedAt: "Oct 23, 2019",
-        thumbnailUrl:
-          "https://assets.ccbp.in/frontend/react-js/nxt-watch/things-conference-2-img.png",
-        title: "The Things Conference India 2019 After Movie",
-        viewCount: "2.6K",
-      },
-    ],
+    searchResults: [],
     apiStatus: apiStatusConstants.success,
   };
 
@@ -85,7 +45,7 @@ class Home extends Component {
   };
 
   componentDidMount() {
-    // this.fetchItems();
+    this.fetchItems();
   }
 
   fetchItems = async () => {
@@ -153,37 +113,39 @@ class Home extends Component {
     return (
       <ThemeContext.Consumer>
         {(value) => (
-          <OuterContainer>
-            {popupOpen && (
-              <Banner>
-                <Div>
-                  <Image src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" />
-                  <Button close onClick={this.closePopup}>
-                    <IoMdClose />
+          <Layout>
+            <OuterContainer>
+              {popupOpen && (
+                <Banner>
+                  <Div>
+                    <Image src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" />
+                    <Button close onClick={this.closePopup}>
+                      <IoMdClose />
+                    </Button>
+                    <BannerContent>
+                      But Nxt Watch Premium prepaid plans with UPI
+                    </BannerContent>
+                    <Button>GET IT NOW</Button>
+                  </Div>
+                </Banner>
+              )}
+              <Content dark={value.dark}>
+                <SearchBox dark={value.dark}>
+                  <Input
+                    value={searchVal}
+                    onChange={this.search}
+                    type="search"
+                    placeholder="Search"
+                    dark={value.dark}
+                  />
+                  <Button dark={value.dark} search>
+                    <IoSearch />
                   </Button>
-                  <BannerContent>
-                    But Nxt Watch Premium prepaid plans with UPI
-                  </BannerContent>
-                  <Button>GET IT NOW</Button>
-                </Div>
-              </Banner>
-            )}
-            <Content dark={value.dark}>
-              <SearchBox dark={value.dark}>
-                <Input
-                  value={searchVal}
-                  onChange={this.search}
-                  type="search"
-                  placeholder="Search"
-                  dark={value.dark}
-                />
-                <Button dark={value.dark} search>
-                  <IoSearch />
-                </Button>
-              </SearchBox>
-              {this.renderSearchResults()}
-            </Content>
-          </OuterContainer>
+                </SearchBox>
+                {this.renderSearchResults()}
+              </Content>
+            </OuterContainer>
+          </Layout>
         )}
       </ThemeContext.Consumer>
     );

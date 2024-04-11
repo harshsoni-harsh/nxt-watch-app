@@ -29,7 +29,7 @@ export const Button = styled.button`
 `;
 export const NavContainer = styled.div`
   width: 100%;
-  flex-grow: 1;
+  flex-grow: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -48,8 +48,11 @@ export const OuterContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-`;
+  height: 100vh;
+  `;
 export const Body = styled.div`
+  position: relative;
+  flex-grow: 1;
   display: flex;
   ${props => props.dark ? "background-color: #181818;" : ""}
 `;
