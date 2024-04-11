@@ -1,9 +1,6 @@
 import Cookies from "js-cookie";
 import { withRouter } from "react-router-dom";
 
-import { FiLogOut } from "react-icons/fi";
-import { GiHamburgerMenu } from "react-icons/gi";
-
 import ThemeContext from "../../context/ThemeContext";
 import {
   Image,
@@ -12,6 +9,8 @@ import {
   NavContainer,
   OuterContainer,
   Body,
+  StyledHamburger,
+  StyledLogout,
 } from "./styledComponents";
 import SideNav from "../SideNav";
 
@@ -43,17 +42,17 @@ const Layout = (props) => {
                 )}
               </Button>
               <Image
-                profile
+                profile="true"
                 src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
               />
               <Button hamburger>
-                <GiHamburgerMenu />
+                <StyledHamburger dark={value.dark} />
               </Button>
-              <Button logout onClick={logout}>
+              <Button dark={value.dark} logout onClick={logout}>
                 Logout
               </Button>
               <Button logoutIcon onClick={logout}>
-                <FiLogOut />
+                <StyledLogout dark={value.dark} />
               </Button>
             </InnerContainer>
           </NavContainer>

@@ -2,7 +2,6 @@ import { IoMdClose } from "react-icons/io";
 import { Component } from "react";
 import { IoSearch } from "react-icons/io5";
 import Cookies from "js-cookie";
-import Loader from "react-loader-spinner";
 
 import {
   Banner,
@@ -15,6 +14,10 @@ import {
   SearchBox,
   Input,
   SearchResults,
+  ScreenCenterDiv,
+  H1,
+  P,
+  StyledLoader,
 } from "./styledComponents";
 
 import ThemeContext from "../../context/ThemeContext";
@@ -33,8 +36,12 @@ class Home extends Component {
     popupOpen: true,
     searchVal: "",
     searchResults: [],
-    apiStatus: apiStatusConstants.success,
+    apiStatus: apiStatusConstants.initial,
   };
+  
+  componentDidMount() {
+    this.fetchItems();
+  }
 
   closePopup = () => {
     this.setState({ popupOpen: false });
@@ -42,11 +49,10 @@ class Home extends Component {
 
   search = (e) => {
     this.setState({ searchVal: e.target.value });
+    if (e.key === "Enter") {
+      this.fetchItems();
+    }
   };
-
-  componentDidMount() {
-    this.fetchItems();
-  }
 
   fetchItems = async () => {
     this.setState({ apiStatus: apiStatusConstants.inProgress });
@@ -74,7 +80,6 @@ class Home extends Component {
         title: o.title,
         viewCount: o.view_count,
       }));
-      console.log(modifiedData);
       this.setState({
         searchResults: modifiedData,
         apiStatus: apiStatusConstants.success,
@@ -84,24 +89,65 @@ class Home extends Component {
     }
   };
 
-  renderSearchResults = () => {
+  renderSearchResults = (dark) => {
     const { searchResults, apiStatus } = this.state;
     switch (apiStatus) {
       case apiStatusConstants.success:
-        return (
+        return searchResults.length === 0 ? (
+          <ScreenCenterDiv>
+            <Image
+              noVideo
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
+              alt="no videos"
+            />
+            <H1 dark={dark}>No Search results found</H1>
+            <P dark={dark}>Try different key words or remove search filter</P>
+            <Button onClick={this.fetchItems} retry>
+              Retry
+            </Button>
+          </ScreenCenterDiv>
+        ) : (
           <SearchResults>
             {searchResults.map((video) => (
               <VideoCard key={video.id} details={video} />
             ))}
           </SearchResults>
         );
+
       case apiStatusConstants.failure:
-        return null;
+        return (
+          <ScreenCenterDiv>
+            <Image
+              noVideo
+              src={
+                dark
+                  ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png"
+                  : "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+              }
+              alt="no videos"
+            />
+            <H1 dark={dark}>Oops! Something Went Wrong</H1>
+            <P dark={dark}>
+              We are having some trouble to complete your request.
+            </P>
+            <P dark={dark}>Please try again.</P>
+            <Button onClick={this.fetchItems} retry>
+              Retry
+            </Button>
+          </ScreenCenterDiv>
+        );
+
       case apiStatusConstants.inProgress:
         return (
-          <div className="loader-container" data-testid="loader">
-            <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
-          </div>
+          <ScreenCenterDiv className="loader-container" data-testid="loader">
+            <StyledLoader
+              dark={dark}
+              type="ThreeDots"
+              color="#ffffff"
+              height="50"
+              width="50"
+            />
+          </ScreenCenterDiv>
         );
       default:
         return null;
@@ -134,15 +180,17 @@ class Home extends Component {
                   <Input
                     value={searchVal}
                     onChange={this.search}
+                    onKeyDown={this.search}
                     type="search"
                     placeholder="Search"
                     dark={value.dark}
+                    id="search"
                   />
-                  <Button dark={value.dark} search>
+                  <Button as="label" htmlFor="search" dark={value.dark} search>
                     <IoSearch />
                   </Button>
                 </SearchBox>
-                {this.renderSearchResults()}
+                {this.renderSearchResults(value.dark)}
               </Content>
             </OuterContainer>
           </Layout>

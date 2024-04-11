@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const ThemeContext = createContext({dark: true})
+const ThemeContext = createContext({ dark: true });
 
-export default ThemeContext
+export default ThemeContext;

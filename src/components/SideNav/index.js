@@ -26,19 +26,39 @@ const SideNav = (props) => {
           <InnerContainer>
             <NavTab dark={value.dark} selected={path === ""} href="/">
               <AiFillHome />
-              <P dark={value.dark} selected={path === ""}>Home</P>
+              <P dark={value.dark} selected={path === ""}>
+                Home
+              </P>
             </NavTab>
-            <NavTab dark={value.dark} selected={path === "trending"} href="/trending">
+            <NavTab
+              dark={value.dark}
+              selected={path === "trending"}
+              href="/trending"
+            >
               <FaFireAlt />
-              <P dark={value.dark} selected={path === "trending"}>Trending</P>
+              <P dark={value.dark} selected={path === "trending"}>
+                Trending
+              </P>
             </NavTab>
-            <NavTab dark={value.dark} selected={path === "gaming"} href="/gaming">
+            <NavTab
+              dark={value.dark}
+              selected={path === "gaming"}
+              href="/gaming"
+            >
               <GiGamepad />
-              <P dark={value.dark} selected={path === "gaming"}>Gaming</P>
+              <P dark={value.dark} selected={path === "gaming"}>
+                Gaming
+              </P>
             </NavTab>
-            <NavTab dark={value.dark} selected={path === "saved-videos"} href="/saved-videos">
+            <NavTab
+              dark={value.dark}
+              selected={path === "saved-videos"}
+              href="/saved-videos"
+            >
               <BsCloudDownload />
-              <P dark={value.dark} selected={path === "saved-videos"}>Saved videos</P>
+              <P dark={value.dark} selected={path === "saved-videos"}>
+                Saved videos
+              </P>
             </NavTab>
           </InnerContainer>
           <InnerContainer bottom>
@@ -48,7 +68,9 @@ const SideNav = (props) => {
               <Image src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png" />
               <Image src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png" />
             </Socials>
-            <P dark={value.dark} comment>Enjoy! Now to see your channels and recommendations!</P>
+            <P dark={value.dark} comment>
+              Enjoy! Now to see your channels and recommendations!
+            </P>
           </InnerContainer>
         </OuterContainer>
       )}

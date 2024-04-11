@@ -1,9 +1,12 @@
 import styled from "styled-components";
+import Loader from "react-loader-spinner";
 
 export const OuterContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+  min-height: 100vh;
+  background-color: #f8fafc;
 `;
 export const Banner = styled.div`
   ::before {
@@ -12,21 +15,22 @@ export const Banner = styled.div`
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-position: center;
     background: url("https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png")
       0 0 no-repeat;
+    background-position: 40% center;
     background-size: cover;
   }
   ::after {
     content: "";
     width: 100%;
-    height: 100%;
     background-color: white;
+    height: 100%;
     z-index: -2;
   }
   z-index: 1;
   overflow: hidden;
   position: relative;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
 `;
@@ -35,6 +39,7 @@ export const Div = styled.div`
 `;
 export const Image = styled.img`
   max-width: 120px;
+  ${(props) => props.noVideo && "width: 250px; max-width: 100%;"}
 `;
 export const BannerContent = styled.p`
   max-width: 40%;
@@ -56,13 +61,14 @@ export const Button = styled.button`
       ? "border: none; padding: 5px 15px; margin: 0; background-color: #212121; color: #555555"
       : props.search
       ? "border: none; padding: 5px 15px; margin: 0; background-color: #ebebeb;"
+      : props.retry
+      ? "border-radius: 5px; padding: 10px 25px; border: none; background-color: #4f46e5; color: #f1f1f1; font-weight: bold; letter-spacing: 0.2px;"
       : ""}
 `;
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 15px;
-  background-color: #f8fafc;
+  height: 100%;
   ${(props) => props.dark && "background-color: black;"}
 `;
 export const SearchBox = styled.div`
@@ -70,8 +76,12 @@ export const SearchBox = styled.div`
   align-items: center;
   width: min(100%, 300px);
   border: 1px solid #cccccc;
-  ${props => props.dark ? "border-color: #666666;" : ""}
-  `;
+  ${(props) => (props.dark ? "border-color: #666666;" : "")}
+  margin: 15px;
+  @media (max-width: 575px) {
+    width: calc(100% - 30px);
+  }
+`;
 export const Input = styled.input`
   width: 100%;
   border: none;
@@ -79,12 +89,44 @@ export const Input = styled.input`
   padding: 5px 10px;
   background-color: transparent;
   border-right: 1px solid #cccccc;
-  ${props => props.dark ? "border-color: #666666;" : ""}
+  ${(props) => (props.dark ? "border-color: #666666;" : "")}
 `;
 export const SearchResults = styled.ul`
   list-style: none;
   padding: 0;
+  margin: 0;
   gap: 20px;
   display: flex;
   flex-wrap: wrap;
+  min-height: 60%;
+  @media (min-width: 576px) {
+    padding: 15px;
+  }
 `;
+export const ScreenCenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  padding: 40px 0;
+`;
+export const H1 = styled.h1`
+  margin-top: 20px;
+  font-size: 1.5rem;
+  color: #231f20;
+  text-align: center;
+  ${(props) => props.dark && "color: #f1f1f1"}
+`;
+export const P = styled.p`
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #616e7c;
+  font-size: 1.2rem;
+  text-align: center;
+  ${(props) => props.dark && "color: #64748b"}
+`;
+export const StyledLoader = styled(Loader)`
+  ${props => props.dark || "filter: invert(1);"}
+`

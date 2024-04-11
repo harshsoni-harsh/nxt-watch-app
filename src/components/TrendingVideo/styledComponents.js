@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 export const Li = styled.li`
   @media (min-width: 576px) {
-    max-width: 250px;
-    margin-bottom: 10px;
-    margin-right: 10px;
+    max-width: 600px;
+    margin-bottom: 20px;
+    margin-right: 20px;
   }
 `;
 
@@ -14,6 +14,9 @@ export const StyledLink = styled(Link)`
   text-decoration: none;
   width: 100%;
   gap: 10px;
+  @media (min-width: 576px) {
+    display: flex;
+  }
 `;
 
 export const ThumbnailImage = styled.img`
@@ -24,6 +27,9 @@ export const ChannelLogo = styled.img`
   max-width: 40px;
   height: 100%;
   margin-top: 5px;
+  @media (min-width: 576px) {
+    display: none;
+  }
 `;
 
 export const VideoDetails = styled.div`
@@ -41,7 +47,6 @@ export const VideoDetails = styled.div`
 export const VideoTitle = styled.p`
   margin: 5px 0;
   color: #1e293b;
-  font-size: 14px;
   font-weight: bold;
   ${(props) => props.dark && "color: #ebebeb;"}
 `;
@@ -69,6 +74,5 @@ export const ForSmall = styled.p`
   padding: 0;
   @media (min-width: 576px) {
     display: none;
- 
-  color: #1e293b;}
+  }
 `;
