@@ -17,7 +17,7 @@ const TrendingVideo = (props) => {
     <ThemeContext.Consumer>
       {(value) => (
         <Li>
-          <StyledLink to={"/videos/".concat(id)}>
+          <StyledLink to={"/video/".concat(id)}>
             <div>
               <ThumbnailImage src={thumbnailUrl} alt={title} />
             </div>
