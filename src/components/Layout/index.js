@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import { withRouter } from "react-router-dom";
+import Popup from "reactjs-popup";
 
 import ThemeContext from "../../context/ThemeContext";
 import {
@@ -11,6 +12,10 @@ import {
   Body,
   StyledHamburger,
   StyledLogout,
+  Model,
+  ModelButtonDiv,
+  CancelBtn,
+  ConfirmBtn,
 } from "./styledComponents";
 import SideNav from "../SideNav";
 
@@ -48,12 +53,42 @@ const Layout = (props) => {
               <Button hamburger>
                 <StyledHamburger dark={value.dark} />
               </Button>
-              <Button dark={value.dark} logout onClick={logout}>
-                Logout
-              </Button>
-              <Button logoutIcon onClick={logout}>
-                <StyledLogout dark={value.dark} />
-              </Button>
+              <Popup
+                modal
+                trigger={
+                  <Button type="button" dark={value.dark} logout>
+                    Logout
+                  </Button>
+                }
+              >
+                {(close) => (
+                  <Model dark={value.dark}>
+                    <p>Are you sure you want to logout?</p>
+                    <ModelButtonDiv dark={value.dark}>
+                      <CancelBtn dark={value.dark} onClick={close}>Cancel</CancelBtn>
+                      <ConfirmBtn dark={value.dark} onClick={logout}>Confirm</ConfirmBtn>
+                    </ModelButtonDiv>
+                  </Model>
+                )}
+              </Popup>
+              <Popup
+                modal
+                trigger={
+                  <Button logoutIcon>
+                    <StyledLogout dark={value.dark} />
+                  </Button>
+                }
+              >
+                {(close) => (
+                  <Model>
+                    <p>Are you sure you want to logout?</p>
+                    <ModelButtonDiv>
+                      <CancelBtn onClick={close}>Cancel</CancelBtn>
+                      <ConfirmBtn onClick={logout}>Confirm</ConfirmBtn>
+                    </ModelButtonDiv>
+                  </Model>
+                )}
+              </Popup>
             </InnerContainer>
           </NavContainer>
           <Body dark={value.dark}>

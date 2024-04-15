@@ -74,3 +74,30 @@ export const StyledHamburger = styled(GiHamburgerMenu)`
 export const StyledLogout = styled(FiLogOut)`
   ${(props) => props.dark && "color: #ebebeb;"}
 `;
+export const Model = styled.div`
+  background-color: white;
+  border-radius: 10px;
+  text-align: center;
+  padding: 25px 30px;
+  color: #00306e;
+`;
+export const ModelButtonDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  padding-top: 10px;
+`;
+export const CancelBtn = styled.button`
+  padding: 8px 15px;
+  color: #616e7c;
+  border: 1px solid #616e7c;
+  background-color: transparent;
+  cursor: pointer;
+`;
+export const ConfirmBtn = styled.button`
+  padding: 8px 15px;
+  color: white;
+  border: none;
+  background-color: #3b82f6;
+  cursor: pointer;
+`;

@@ -111,7 +111,7 @@ export const ScreenCenterDiv = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
-  padding: 40px 0;
+  padding: 40px 4px;
 `;
 export const H1 = styled.h1`
   margin-top: 20px;
