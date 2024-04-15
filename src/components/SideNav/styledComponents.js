@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const OuterContainer = styled.div`
   display: flex;
@@ -20,7 +21,7 @@ export const InnerContainer = styled.div`
   font-size: 16px;
   ${(props) => (props.bottom ? "margin: 20px 0 0 20px; gap: 20px;" : "")}
 `;
-export const NavTab = styled.a`
+export const NavTab = styled(Link)`
   display: flex;
   align-items: center;
   font-weight: normal;

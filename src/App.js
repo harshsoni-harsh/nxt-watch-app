@@ -8,6 +8,7 @@ import Home from "./components/Home";
 import Trending from "./components/Trending";
 import Gaming from "./components/Gaming";
 import Video from "./components/VideoItemDetails";
+import SavedVideo from "./components/SavedVideo";
 import NotFound from "./components/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -52,6 +53,7 @@ class App extends Component {
             <ProtectedRoute exact path="/trending" component={Trending} />
             <ProtectedRoute exact path="/gaming" component={Gaming} />
             <ProtectedRoute exact path="/video/:id" component={Video} />
+            <ProtectedRoute exact path="/saved-videos" component={SavedVideo} />
             <Route exact path="bad-path" component={NotFound} />
             <Redirect to="bad-path" />
           </Switch>

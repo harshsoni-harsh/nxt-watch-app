@@ -59,11 +59,12 @@ export const OuterContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
 `;
 export const Body = styled.div`
-  position: relative;
-  flex-grow: 1;
+  height: 100%;
+  overflow: auto;
+  flex-grow: 0;
   display: flex;
   ${(props) => (props.dark ? "background-color: #212121;" : "")}
 `;

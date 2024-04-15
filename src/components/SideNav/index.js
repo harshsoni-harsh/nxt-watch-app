@@ -24,7 +24,7 @@ const SideNav = (props) => {
       {(value) => (
         <OuterContainer>
           <InnerContainer>
-            <NavTab dark={value.dark} selected={path === ""} href="/">
+            <NavTab dark={value.dark} selected={path === ""} to="/">
               <AiFillHome />
               <P dark={value.dark} selected={path === ""}>
                 Home
@@ -33,7 +33,7 @@ const SideNav = (props) => {
             <NavTab
               dark={value.dark}
               selected={path === "trending"}
-              href="/trending"
+              to="/trending"
             >
               <FaFireAlt />
               <P dark={value.dark} selected={path === "trending"}>
@@ -43,7 +43,7 @@ const SideNav = (props) => {
             <NavTab
               dark={value.dark}
               selected={path === "gaming"}
-              href="/gaming"
+              to="/gaming"
             >
               <GiGamepad />
               <P dark={value.dark} selected={path === "gaming"}>
@@ -53,7 +53,7 @@ const SideNav = (props) => {
             <NavTab
               dark={value.dark}
               selected={path === "saved-videos"}
-              href="/saved-videos"
+              to="/saved-videos"
             >
               <BsCloudDownload />
               <P dark={value.dark} selected={path === "saved-videos"}>

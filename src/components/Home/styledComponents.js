@@ -58,7 +58,7 @@ export const Button = styled.button`
     props.close
       ? "padding: 0;margin: 0; position: absolute; left: 95%; top: 10px; border: none;"
       : props.search && props.dark
-      ? "border: none; padding: 5px 15px; margin: 0; background-color: #212121; color: #555555"
+      ? "border-width: 0; padding: 5px 15px; margin: 0; background-color: #666666; color: #212121"
       : props.search
       ? "border: none; padding: 5px 15px; margin: 0; background-color: #ebebeb;"
       : props.retry
@@ -76,6 +76,7 @@ export const SearchBox = styled.div`
   align-items: center;
   width: min(100%, 300px);
   border: 1px solid #cccccc;
+  border-radius: 3px;
   ${(props) => (props.dark ? "border-color: #666666;" : "")}
   margin: 15px;
   @media (max-width: 575px) {
@@ -88,8 +89,8 @@ export const Input = styled.input`
   outline: none;
   padding: 5px 10px;
   background-color: transparent;
-  border-right: 1px solid #cccccc;
-  ${(props) => (props.dark ? "border-color: #666666;" : "")}
+  border-radius: 3px 0 0 3px;
+  ${(props) => (props.dark ? "border-color: #666666; color: #cccccc" : "")}
 `;
 export const SearchResults = styled.ul`
   list-style: none;
