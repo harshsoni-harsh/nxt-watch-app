@@ -35,9 +35,13 @@ export const TransparentButton = styled.button`
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
+  transition-duration: 150ms;
+  ${props => props.active && "color: red; "}
 `;
 export const VideoTitle = styled.p`
   padding: 0 10px;
+  font-weight: bold;
 `;
 export const SubscriberCount = styled.p`
   color: #475569;
@@ -46,7 +50,8 @@ export const SubscriberCount = styled.p`
 `;
 export const ChannelName = styled.p`
   margin-top: 0;
-  font-size: 16px;
+  font-size: 14px;
+  font-weight: bold;
 `;
 export const ChannelLogo = styled.img`
   height: 30px;
@@ -63,7 +68,12 @@ export const VideoDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 5px;
+  width: 100%;
   max-width: 800px;
+  padding-right: 8px;
+  @media (max-width: 767px) {
+    padding: 0;
+  }
 `;
 export const HR = styled.hr`
   width: 100%;

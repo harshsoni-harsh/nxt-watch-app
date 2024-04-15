@@ -1,6 +1,6 @@
 import { Component } from "react";
 import Cookies from "js-cookie";
-import { formatDistance, parse } from "date-fns";
+import { formatDistanceToNow, parse } from "date-fns";
 import { BiDislike, BiLike } from "react-icons/bi";
 import { FiSave } from "react-icons/fi";
 
@@ -25,8 +25,9 @@ import {
   Flex,
   VideoDiv,
   HR,
-  StyledReactPlayer
+  StyledReactPlayer,
 } from "./styledComponents";
+import SavedVideoContext from "../../context/SavedVideoContext";
 
 const apiStatusConstants = {
   initial: "INITIAL",
@@ -34,17 +35,32 @@ const apiStatusConstants = {
   success: "SUCCESS",
   failure: "FAILURE",
 };
-class Video extends Component {
-  state = { videoDetails: {}, apiStatus: apiStatusConstants.failure };
+class VideoItemDetails extends Component {
+  state = {
+    like: false,
+    dislike: false,
+    saved: false,
+    videoDetails: {},
+    apiStatus: apiStatusConstants.initial,
+  };
 
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
     this.id = id;
-    this.fetchVideo(id);
+    <SavedVideoContext.Consumer>
+      {(value) => {
+        const isSaved = value.videoDetails.find(
+          (video) => video.id === this.id
+        );
+        if (isSaved) this.setState({ saved: true });
+      }}
+    </SavedVideoContext.Consumer>;
+    this.fetchVideo();
   }
 
-  fetchVideo = async (id) => {
+  fetchVideo = async () => {
+    const id = this.id;
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
       videoDetails: {},
@@ -81,8 +97,38 @@ class Video extends Component {
     }
   };
 
+  onLike = () => {
+    const { like } = this.state;
+    if (like)
+      this.setState({
+        like: false,
+      });
+    else
+      this.setState({
+        like: true,
+        dislike: false,
+      });
+  };
+
+  onDislike = () => {
+    const { dislike } = this.state;
+    if (dislike)
+      this.setState({
+        dislike: false,
+      });
+    else
+      this.setState({
+        like: false,
+        dislike: true,
+      });
+  };
+
+  onSave = () => {
+    this.setState((prevState) => ({ saved: !prevState.saved }));
+  };
+
   renderVideo = (dark) => {
-    const { videoDetails, apiStatus } = this.state;
+    const { videoDetails, apiStatus, like, dislike } = this.state;
     switch (apiStatus) {
       case apiStatusConstants.success:
         return (
@@ -95,22 +141,35 @@ class Video extends Component {
                   {videoDetails.viewCount}&nbsp;views&nbsp;•&nbsp;
                 </VideoStats>
                 <VideoStats>
-                  {formatDistance(
-                    parse(videoDetails.publishedAt, "MMM d, y", new Date()),
-                    new Date()
+                  {formatDistanceToNow(
+                    parse(videoDetails.publishedAt, "MMM d, y", new Date())
                   )}
                 </VideoStats>
               </div>
               <div>
-                <TransparentButton>
+                <TransparentButton active={like} onClick={this.onLike}>
                   <BiLike /> Like
                 </TransparentButton>
-                <TransparentButton>
+                <TransparentButton active={dislike} onClick={this.onDislike}>
                   <BiDislike /> Dislike
                 </TransparentButton>
-                <TransparentButton>
-                  <FiSave /> Save
-                </TransparentButton>
+                <SavedVideoContext.Consumer>
+                  {(value) => {
+                    const { onSave, removeSave } = value;
+                    let { saved } = this.state;
+                    const saveVideo = () => {
+                      if (saved) removeSave(this.id);
+                      else onSave(videoDetails);
+                      saved = !saved;
+                      this.setState({ saved });
+                    };
+                    return (
+                      <TransparentButton active={saved} onClick={saveVideo}>
+                        <FiSave /> {saved ? "Saved" : "Save"}
+                      </TransparentButton>
+                    );
+                  }}
+                </SavedVideoContext.Consumer>
               </div>
             </JustifyBetween>
             <HR />
@@ -181,4 +240,4 @@ class Video extends Component {
   }
 }
 
-export default Video;
+export default VideoItemDetails;

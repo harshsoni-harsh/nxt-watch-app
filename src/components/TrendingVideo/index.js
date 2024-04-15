@@ -1,4 +1,4 @@
-import { formatDistance, parse } from "date-fns";
+import { formatDistanceToNow, parse } from "date-fns";
 
 import ThemeContext from "../../context/ThemeContext";
 import {
@@ -36,7 +36,7 @@ const TrendingVideo = (props) => {
                   <ForSmall> &nbsp;•&nbsp; </ForSmall>
                   <VideoStats>{viewCount}&nbsp;views&nbsp;•&nbsp;</VideoStats>
                   <VideoStats>
-                    {formatDistance(
+                    {formatDistanceToNow(
                       parse(publishedAt, "MMM d, y", new Date()),
                       new Date()
                     )}
