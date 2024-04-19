@@ -1,4 +1,4 @@
-import ThemeContext from "../../context/ThemeContext";
+import ThemeContext from '../../context/ThemeContext'
 import {
   Li,
   StyledLink,
@@ -7,17 +7,17 @@ import {
   VideoTitle,
   VideoStats,
   VideoStatDiv,
-} from "./styledComponents";
+} from './styledComponents'
 
-const TrendingVideo = (props) => {
-  const { details } = props;
-  const { id, thumbnailUrl, title, viewCount } = details;
+const TrendingVideo = props => {
+  const {details} = props
+  const {id, thumbnailUrl, title, viewCount} = details
 
   return (
     <ThemeContext.Consumer>
-      {(value) => (
+      {value => (
         <Li>
-          <StyledLink to={"/video/".concat(id)}>
+          <StyledLink to={'/video/'.concat(id)}>
             <div>
               <ThumbnailImage src={thumbnailUrl} alt={title} />
             </div>
@@ -31,7 +31,7 @@ const TrendingVideo = (props) => {
         </Li>
       )}
     </ThemeContext.Consumer>
-  );
-};
+  )
+}
 
-export default TrendingVideo;
+export default TrendingVideo

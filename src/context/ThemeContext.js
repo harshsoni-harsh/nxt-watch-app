@@ -1,9 +1,9 @@
-import { createContext } from "react";
+import {createContext} from 'react'
 
 const ThemeContext = createContext({
   dark: false,
   changeTheme: () => {},
   logOut: () => {},
-});
+})
 
-export default ThemeContext;
+export default ThemeContext

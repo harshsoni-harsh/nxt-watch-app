@@ -1,8 +1,9 @@
-import Cookies from "js-cookie";
-import { withRouter } from "react-router-dom";
-import Popup from "reactjs-popup";
+import Cookies from 'js-cookie'
+import {withRouter, Link} from 'react-router-dom'
+import Popup from 'reactjs-popup'
+import {BsMoon, BsBrightnessHigh} from 'react-icons/bs'
 
-import ThemeContext from "../../context/ThemeContext";
+import ThemeContext from '../../context/ThemeContext'
 import {
   Image,
   Button,
@@ -16,39 +17,44 @@ import {
   ModelButtonDiv,
   CancelBtn,
   ConfirmBtn,
-} from "./styledComponents";
-import SideNav from "../SideNav";
+} from './styledComponents'
+import SideNav from '../SideNav'
 
-const Layout = (props) => {
+const Layout = props => {
   const logout = () => {
-    const { history } = props;
-    Cookies.remove("jwt_token");
-    history.replace("/login");
-  };
+    const {history} = props
+    Cookies.remove('jwt_token')
+    history.replace('/login')
+  }
+  const {children} = props
   return (
     <ThemeContext.Consumer>
-      {(value) => (
+      {value => (
         <OuterContainer>
           <NavContainer dark={value.dark}>
-            <Image
-              logo
-              src={
-                value.dark
-                  ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png"
-                  : "https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-              }
-            />
+            <Link to="/">
+              <Image
+                logo
+                src={
+                  value.dark
+                    ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
+                    : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
+                }
+                alt="website logo"
+              />
+            </Link>
             <InnerContainer>
-              <Button icon onClick={value.changeTheme}>
+              <Button icon onClick={value.changeTheme} data-testid="theme">
                 {value.dark ? (
-                  <Image icon dark={value.dark} src="/icons/light-mode.svg" />
+                  <BsBrightnessHigh color="#ffffff" size={25} />
                 ) : (
-                  <Image icon dark={value.dark} src="/icons/dark-mode.svg" />
+                  <BsMoon size={25} />
                 )}
               </Button>
               <Image
                 profile="true"
                 src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
+                alt="profile"
               />
               <Button hamburger>
                 <StyledHamburger dark={value.dark} />
@@ -61,12 +67,16 @@ const Layout = (props) => {
                   </Button>
                 }
               >
-                {(close) => (
+                {close => (
                   <Model dark={value.dark}>
                     <p>Are you sure you want to logout?</p>
                     <ModelButtonDiv dark={value.dark}>
-                      <CancelBtn dark={value.dark} onClick={close}>Cancel</CancelBtn>
-                      <ConfirmBtn dark={value.dark} onClick={logout}>Confirm</ConfirmBtn>
+                      <CancelBtn dark={value.dark} onClick={close}>
+                        Cancel
+                      </CancelBtn>
+                      <ConfirmBtn dark={value.dark} onClick={logout}>
+                        Confirm
+                      </ConfirmBtn>
                     </ModelButtonDiv>
                   </Model>
                 )}
@@ -79,7 +89,7 @@ const Layout = (props) => {
                   </Button>
                 }
               >
-                {(close) => (
+                {close => (
                   <Model>
                     <p>Are you sure you want to logout?</p>
                     <ModelButtonDiv>
@@ -93,12 +103,12 @@ const Layout = (props) => {
           </NavContainer>
           <Body dark={value.dark}>
             <SideNav />
-            {props.children}
+            {children}
           </Body>
         </OuterContainer>
       )}
     </ThemeContext.Consumer>
-  );
-};
+  )
+}
 
-export default withRouter(Layout);
+export default withRouter(Layout)

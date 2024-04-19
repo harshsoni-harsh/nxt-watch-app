@@ -1,6 +1,6 @@
-import { formatDistanceToNow, parse } from "date-fns";
+import {formatDistanceToNow, parse} from 'date-fns'
 
-import ThemeContext from "../../context/ThemeContext";
+import ThemeContext from '../../context/ThemeContext'
 import {
   Li,
   StyledLink,
@@ -12,18 +12,18 @@ import {
   VideoStatDiv,
   ChannelLogo,
   ForSmall,
-} from "./styledComponents";
+} from './styledComponents'
 
-const TrendingVideo = (props) => {
-  const { details } = props;
-  const { channel, id, publishedAt, thumbnailUrl, title, viewCount } = details;
-  const { name, profileImageUrl } = channel;
+const TrendingVideo = props => {
+  const {details} = props
+  const {channel, id, publishedAt, thumbnailUrl, title, viewCount} = details
+  const {name, profileImageUrl} = channel
 
   return (
     <ThemeContext.Consumer>
-      {(value) => (
+      {value => (
         <Li>
-          <StyledLink to={"/video/".concat(id)}>
+          <StyledLink to={'/video/'.concat(id)}>
             <div>
               <ThumbnailImage src={thumbnailUrl} alt={title} />
             </div>
@@ -37,8 +37,8 @@ const TrendingVideo = (props) => {
                   <VideoStats>{viewCount}&nbsp;views&nbsp;•&nbsp;</VideoStats>
                   <VideoStats>
                     {formatDistanceToNow(
-                      parse(publishedAt, "MMM d, y", new Date()),
-                      new Date()
+                      parse(publishedAt, 'MMM d, y', new Date()),
+                      new Date(),
                     )}
                   </VideoStats>
                 </VideoStatDiv>
@@ -48,7 +48,7 @@ const TrendingVideo = (props) => {
         </Li>
       )}
     </ThemeContext.Consumer>
-  );
-};
+  )
+}
 
-export default TrendingVideo;
+export default TrendingVideo

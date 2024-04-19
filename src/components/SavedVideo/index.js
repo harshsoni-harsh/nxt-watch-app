@@ -1,6 +1,6 @@
-import { Component } from "react";
+import {Component} from 'react'
 
-import ThemeContext from "../../context/ThemeContext";
+import ThemeContext from '../../context/ThemeContext'
 
 import {
   OuterContainer,
@@ -10,20 +10,20 @@ import {
   Content,
   Heading,
   ResultItems,
-} from "./styledComponents";
-import Layout from "../Layout";
-import TrendingVideo from "../TrendingVideo";
-import { H1, Image, P, ScreenCenterDiv } from "../Home/styledComponents";
-import SavedVideoContext from "../../context/SavedVideoContext";
+} from './styledComponents'
+import Layout from '../Layout'
+import TrendingVideo from '../TrendingVideo'
+import {H1, Image, P, ScreenCenterDiv} from '../Home/styledComponents'
+import SavedVideoContext from '../../context/SavedVideoContext'
 
 class Trending extends Component {
   render() {
     return (
       <ThemeContext.Consumer>
-        {(value) => (
+        {value => (
           <SavedVideoContext.Consumer>
-            {(saved) => (
-              <Layout>
+            {saved => (
+              <Layout data-testid="savedVideos" dark={value.dark}>
                 {saved.savedVideos.length === 0 ? (
                   <ScreenCenterDiv>
                     <Image
@@ -46,7 +46,7 @@ class Trending extends Component {
                     </Header>
                     <Content dark={value.dark}>
                       <ResultItems>
-                        {saved.savedVideos.map((video) => (
+                        {saved.savedVideos.map(video => (
                           <TrendingVideo key={video.id} details={video} />
                         ))}
                       </ResultItems>
@@ -58,8 +58,8 @@ class Trending extends Component {
           </SavedVideoContext.Consumer>
         )}
       </ThemeContext.Consumer>
-    );
+    )
   }
 }
 
-export default Trending;
+export default Trending

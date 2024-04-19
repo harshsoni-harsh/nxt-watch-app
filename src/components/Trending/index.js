@@ -1,7 +1,7 @@
-import { Component } from "react";
-import Cookies from "js-cookie";
+import {Component} from 'react'
+import Cookies from 'js-cookie'
 
-import ThemeContext from "../../context/ThemeContext";
+import ThemeContext from '../../context/ThemeContext'
 
 import {
   OuterContainer,
@@ -11,44 +11,51 @@ import {
   Content,
   Heading,
   ResultItems,
-} from "./styledComponents";
-import Layout from "../Layout";
-import TrendingVideo from "../TrendingVideo";
-import { Button, H1, Image, P, ScreenCenterDiv, StyledLoader } from "../Home/styledComponents";
+} from './styledComponents'
+import Layout from '../Layout'
+import TrendingVideo from '../TrendingVideo'
+import {
+  Button,
+  H1,
+  Image,
+  P,
+  ScreenCenterDiv,
+  StyledLoader,
+} from '../Home/styledComponents'
 
 const apiStatusConstants = {
-  initial: "INITIAL",
-  inProgress: "IN_PROGRESS",
-  success: "SUCCESS",
-  failure: "FAILURE",
-};
+  initial: 'INITIAL',
+  inProgress: 'IN_PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
 
 class Trending extends Component {
   state = {
     resultItems: [],
     apiStatus: apiStatusConstants.initial,
-  };
+  }
 
   componentDidMount() {
-    this.fetchItems();
+    this.fetchItems()
   }
 
   fetchItems = async () => {
-    this.setState({ apiStatus: apiStatusConstants.inProgress });
-    const jwtToken = Cookies.get("jwt_token");
+    this.setState({apiStatus: apiStatusConstants.inProgress})
+    const jwtToken = Cookies.get('jwt_token')
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
-    };
+    }
     const response = await fetch(
-      "https://apis.ccbp.in/videos/trending",
-      options
-    );
+      'https://apis.ccbp.in/videos/trending',
+      options,
+    )
     if (response.ok) {
-      let data = await response.json();
-      let modifiedData = data.videos;
-      modifiedData = modifiedData.map((video) => ({
+      const data = await response.json()
+      let modifiedData = data.videos
+      modifiedData = modifiedData.map(video => ({
         id: video.id,
         title: video.title,
         thumbnailUrl: video.thumbnail_url,
@@ -58,18 +65,18 @@ class Trending extends Component {
         },
         viewCount: video.view_count,
         publishedAt: video.published_at,
-      }));
+      }))
       this.setState({
         resultItems: modifiedData,
         apiStatus: apiStatusConstants.success,
-      });
+      })
     } else {
-      this.setState({ apiStatus: apiStatusConstants.failure });
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
-  };
+  }
 
-  renderTrendingVideos = (dark) => {
-    const { resultItems, apiStatus } = this.state;
+  renderTrendingVideos = dark => {
+    const {resultItems, apiStatus} = this.state
     switch (apiStatus) {
       case apiStatusConstants.success:
         return resultItems.length === 0 ? (
@@ -87,11 +94,11 @@ class Trending extends Component {
           </ScreenCenterDiv>
         ) : (
           <ResultItems>
-            {resultItems.map((video) => (
+            {resultItems.map(video => (
               <TrendingVideo key={video.id} details={video} />
             ))}
           </ResultItems>
-        );
+        )
 
       case apiStatusConstants.failure:
         return (
@@ -100,10 +107,10 @@ class Trending extends Component {
               noVideo
               src={
                 dark
-                  ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png"
-                  : "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+                  ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+                  : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
               }
-              alt="no videos"
+              alt="failure view"
             />
             <H1 dark={dark}>Oops! Something Went Wrong</H1>
             <P dark={dark}>
@@ -114,7 +121,7 @@ class Trending extends Component {
               Retry
             </Button>
           </ScreenCenterDiv>
-        );
+        )
 
       case apiStatusConstants.inProgress:
         return (
@@ -127,17 +134,17 @@ class Trending extends Component {
               width="50"
             />
           </ScreenCenterDiv>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   render() {
     return (
       <ThemeContext.Consumer>
-        {(value) => (
-          <Layout>
+        {value => (
+          <Layout data-testid="trending" dark={value.dark}>
             <OuterContainer>
               <Header dark={value.dark}>
                 <TrendingLogo dark={value.dark}>
@@ -145,13 +152,15 @@ class Trending extends Component {
                 </TrendingLogo>
                 <Heading dark={value.dark}>Trending</Heading>
               </Header>
-              <Content dark={value.dark}>{this.renderTrendingVideos(value.dark)}</Content>
+              <Content dark={value.dark}>
+                {this.renderTrendingVideos(value.dark)}
+              </Content>
             </OuterContainer>
           </Layout>
         )}
       </ThemeContext.Consumer>
-    );
+    )
   }
 }
 
-export default Trending;
+export default Trending

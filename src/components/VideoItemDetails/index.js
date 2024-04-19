@@ -1,11 +1,11 @@
-import { Component } from "react";
-import Cookies from "js-cookie";
-import { formatDistanceToNow, parse } from "date-fns";
-import { BiDislike, BiLike } from "react-icons/bi";
-import { FiSave } from "react-icons/fi";
+import {Component} from 'react'
+import Cookies from 'js-cookie'
+import {formatDistanceToNow, parse} from 'date-fns'
+import {BiDislike, BiLike} from 'react-icons/bi'
+import {FiSave} from 'react-icons/fi'
 
-import ThemeContext from "../../context/ThemeContext";
-import Layout from "../Layout";
+import ThemeContext from '../../context/ThemeContext'
+import Layout from '../Layout'
 import {
   Button,
   H1,
@@ -13,7 +13,7 @@ import {
   P,
   ScreenCenterDiv,
   StyledLoader,
-} from "../Home/styledComponents";
+} from '../Home/styledComponents'
 import {
   VideoStats,
   JustifyBetween,
@@ -26,57 +26,49 @@ import {
   VideoDiv,
   HR,
   StyledReactPlayer,
-} from "./styledComponents";
-import SavedVideoContext from "../../context/SavedVideoContext";
+} from './styledComponents'
+import SavedVideoContext from '../../context/SavedVideoContext'
 
 const apiStatusConstants = {
-  initial: "INITIAL",
-  inProgress: "IN_PROGRESS",
-  success: "SUCCESS",
-  failure: "FAILURE",
-};
+  initial: 'INITIAL',
+  inProgress: 'IN_PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
 class VideoItemDetails extends Component {
   state = {
     like: false,
     dislike: false,
-    saved: false,
     videoDetails: {},
+    saved: false,
     apiStatus: apiStatusConstants.initial,
-  };
+  }
 
   componentDidMount() {
-    const { match } = this.props;
-    const { id } = match.params;
-    this.id = id;
-    <SavedVideoContext.Consumer>
-      {(value) => {
-        const isSaved = value.videoDetails.find(
-          (video) => video.id === this.id
-        );
-        if (isSaved) this.setState({ saved: true });
-      }}
-    </SavedVideoContext.Consumer>;
-    this.fetchVideo();
+    const {match} = this.props
+    const {id} = match.params
+    this.id = id
+    this.fetchVideo()
   }
 
   fetchVideo = async () => {
-    const id = this.id;
+    const {id} = this
     this.setState({
       apiStatus: apiStatusConstants.inProgress,
       videoDetails: {},
-    });
-    const jwtToken = Cookies.get("jwt_token");
+    })
+    const jwtToken = Cookies.get('jwt_token')
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
-    };
+    }
     const response = await fetch(
-      "https://apis.ccbp.in/videos/".concat(id),
-      options
-    );
+      'https://apis.ccbp.in/videos/'.concat(id),
+      options,
+    )
     if (response.ok) {
-      const data = await response.json();
+      const data = await response.json()
       const videoDetails = {
         id: data.video_details.id,
         title: data.video_details.title,
@@ -90,49 +82,51 @@ class VideoItemDetails extends Component {
         viewCount: data.video_details.view_count,
         publishedAt: data.video_details.published_at,
         description: data.video_details.description,
-      };
-      this.setState({ videoDetails, apiStatus: apiStatusConstants.success });
+      }
+      this.setState({videoDetails, apiStatus: apiStatusConstants.success})
     } else {
-      this.setState({ apiStatus: apiStatusConstants.failure });
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
-  };
+  }
 
   onLike = () => {
-    const { like } = this.state;
+    const {like} = this.state
     if (like)
       this.setState({
         like: false,
-      });
+      })
     else
       this.setState({
         like: true,
         dislike: false,
-      });
-  };
+      })
+  }
 
   onDislike = () => {
-    const { dislike } = this.state;
+    const {dislike} = this.state
     if (dislike)
       this.setState({
         dislike: false,
-      });
+      })
     else
       this.setState({
         like: false,
         dislike: true,
-      });
-  };
+      })
+  }
 
-  onSave = () => {
-    this.setState((prevState) => ({ saved: !prevState.saved }));
-  };
+  toggleSave = () => {
+    this.setState(prev => ({
+      saved: !prev.saved,
+    }))
+  }
 
-  renderVideo = (dark) => {
-    const { videoDetails, apiStatus, like, dislike } = this.state;
+  renderVideo = dark => {
+    const {videoDetails, apiStatus, like, dislike} = this.state
     switch (apiStatus) {
       case apiStatusConstants.success:
         return (
-          <VideoDiv dark={dark}>
+          <VideoDiv id={videoDetails.id}>
             <StyledReactPlayer width="100%" url={videoDetails.videoUrl} />
             <VideoTitle dark={dark}>{videoDetails.title}</VideoTitle>
             <JustifyBetween>
@@ -142,7 +136,7 @@ class VideoItemDetails extends Component {
                 </VideoStats>
                 <VideoStats>
                   {formatDistanceToNow(
-                    parse(videoDetails.publishedAt, "MMM d, y", new Date())
+                    parse(videoDetails.publishedAt, 'MMM d, y', new Date()),
                   )}
                 </VideoStats>
               </div>
@@ -154,20 +148,19 @@ class VideoItemDetails extends Component {
                   <BiDislike /> Dislike
                 </TransparentButton>
                 <SavedVideoContext.Consumer>
-                  {(value) => {
-                    const { onSave, removeSave } = value;
-                    let { saved } = this.state;
+                  {value => {
+                    const {onSave, removeSave} = value
+                    const {saved} = this.state
                     const saveVideo = () => {
-                      if (saved) removeSave(this.id);
-                      else onSave(videoDetails);
-                      saved = !saved;
-                      this.setState({ saved });
-                    };
+                      this.toggleSave()
+                      if (saved) removeSave(this.id)
+                      else onSave(videoDetails)
+                    }
                     return (
                       <TransparentButton active={saved} onClick={saveVideo}>
-                        <FiSave /> {saved ? "Saved" : "Save"}
+                        <FiSave /> {saved ? 'Saved' : 'Save'}
                       </TransparentButton>
-                    );
+                    )
                   }}
                 </SavedVideoContext.Consumer>
               </div>
@@ -189,7 +182,7 @@ class VideoItemDetails extends Component {
               </div>
             </Flex>
           </VideoDiv>
-        );
+        )
 
       case apiStatusConstants.failure:
         return (
@@ -198,10 +191,10 @@ class VideoItemDetails extends Component {
               noVideo
               src={
                 dark
-                  ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png"
-                  : "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+                  ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+                  : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
               }
-              alt="no videos"
+              alt="failure view"
             />
             <H1 dark={dark}>Oops! Something Went Wrong</H1>
             <P dark={dark}>
@@ -212,7 +205,7 @@ class VideoItemDetails extends Component {
               Retry
             </Button>
           </ScreenCenterDiv>
-        );
+        )
 
       case apiStatusConstants.inProgress:
         return (
@@ -225,19 +218,23 @@ class VideoItemDetails extends Component {
               width="50"
             />
           </ScreenCenterDiv>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
 
   render() {
     return (
       <ThemeContext.Consumer>
-        {(value) => <Layout>{this.renderVideo(value.dark)}</Layout>}
+        {value => (
+          <Layout data-testid="videoItemDetails" dark={value.dark}>
+            {this.renderVideo(value.dark)}
+          </Layout>
+        )}
       </ThemeContext.Consumer>
-    );
+    )
   }
 }
 
-export default VideoItemDetails;
+export default VideoItemDetails

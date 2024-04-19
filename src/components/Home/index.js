@@ -1,7 +1,7 @@
-import { IoMdClose } from "react-icons/io";
-import { Component } from "react";
-import { IoSearch } from "react-icons/io5";
-import Cookies from "js-cookie";
+import {IoMdClose} from 'react-icons/io'
+import {Component} from 'react'
+import {IoSearch} from 'react-icons/io5'
+import Cookies from 'js-cookie'
 
 import {
   Banner,
@@ -18,58 +18,58 @@ import {
   H1,
   P,
   StyledLoader,
-} from "./styledComponents";
+} from './styledComponents'
 
-import ThemeContext from "../../context/ThemeContext";
-import VideoCard from "../VideoCard";
-import Layout from "../Layout";
+import ThemeContext from '../../context/ThemeContext'
+import VideoCard from '../VideoCard'
+import Layout from '../Layout'
 
 const apiStatusConstants = {
-  initial: "INITIAL",
-  inProgress: "IN_PROGRESS",
-  success: "SUCCESS",
-  failure: "FAILURE",
-};
+  initial: 'INITIAL',
+  inProgress: 'IN_PROGRESS',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
 
 class Home extends Component {
   state = {
     popupOpen: true,
-    searchVal: "",
+    searchVal: '',
     searchResults: [],
     apiStatus: apiStatusConstants.initial,
-  };
-  
+  }
+
   componentDidMount() {
-    this.fetchItems();
+    this.fetchItems()
   }
 
   closePopup = () => {
-    this.setState({ popupOpen: false });
-  };
+    this.setState({popupOpen: false})
+  }
 
-  search = (e) => {
-    this.setState({ searchVal: e.target.value });
-    if (e.key === "Enter") {
-      this.fetchItems();
+  search = e => {
+    this.setState({searchVal: e.target.value})
+    if (e.key === 'Enter') {
+      this.fetchItems()
     }
-  };
+  }
 
   fetchItems = async () => {
-    this.setState({ apiStatus: apiStatusConstants.inProgress });
-    const { searchVal } = this.state;
-    const jwtToken = Cookies.get("jwt_token");
+    this.setState({apiStatus: apiStatusConstants.inProgress})
+    const {searchVal} = this.state
+    const jwtToken = Cookies.get('jwt_token')
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
       },
-    };
+    }
     const response = await fetch(
       `https://apis.ccbp.in/videos/all?search=${searchVal}`,
-      options
-    );
+      options,
+    )
     if (response.ok) {
-      const data = await response.json();
-      const modifiedData = data.videos.map((o) => ({
+      const data = await response.json()
+      const modifiedData = data.videos.map(o => ({
         channel: {
           name: o.channel.name,
           profileImageUrl: o.channel.profile_image_url,
@@ -79,18 +79,18 @@ class Home extends Component {
         thumbnailUrl: o.thumbnail_url,
         title: o.title,
         viewCount: o.view_count,
-      }));
+      }))
       this.setState({
         searchResults: modifiedData,
         apiStatus: apiStatusConstants.success,
-      });
+      })
     } else {
-      this.setState({ apiStatus: apiStatusConstants.failure });
+      this.setState({apiStatus: apiStatusConstants.failure})
     }
-  };
+  }
 
-  renderSearchResults = (dark) => {
-    const { searchResults, apiStatus } = this.state;
+  renderSearchResults = dark => {
+    const {searchResults, apiStatus} = this.state
     switch (apiStatus) {
       case apiStatusConstants.success:
         return searchResults.length === 0 ? (
@@ -108,11 +108,11 @@ class Home extends Component {
           </ScreenCenterDiv>
         ) : (
           <SearchResults>
-            {searchResults.map((video) => (
+            {searchResults.map(video => (
               <VideoCard key={video.id} details={video} />
             ))}
           </SearchResults>
-        );
+        )
 
       case apiStatusConstants.failure:
         return (
@@ -121,10 +121,10 @@ class Home extends Component {
               noVideo
               src={
                 dark
-                  ? "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png"
-                  : "https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
+                  ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-dark-theme-img.png'
+                  : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png'
               }
-              alt="no videos"
+              alt="failure view"
             />
             <H1 dark={dark}>Oops! Something Went Wrong</H1>
             <P dark={dark}>
@@ -135,7 +135,7 @@ class Home extends Component {
               Retry
             </Button>
           </ScreenCenterDiv>
-        );
+        )
 
       case apiStatusConstants.inProgress:
         return (
@@ -148,35 +148,43 @@ class Home extends Component {
               width="50"
             />
           </ScreenCenterDiv>
-        );
+        )
       default:
-        return null;
+        return null
     }
-  };
+  }
+
+  submitForm = e => {
+    e.preventDefault()
+    this.fetchItems()
+  }
 
   render() {
-    const { popupOpen, searchVal } = this.state;
+    const {popupOpen, searchVal} = this.state
     return (
       <ThemeContext.Consumer>
-        {(value) => (
+        {value => (
           <Layout>
             <OuterContainer>
               {popupOpen && (
-                <Banner>
-                  <Div>
-                    <Image src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" />
-                    <Button close onClick={this.closePopup}>
+                <Div>
+                  <Banner data-testid="banner">
+                    <Image
+                      alt="nxt watch logo"
+                      src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                    />
+                    <Button close onClick={this.closePopup} data-testid="close">
                       <IoMdClose />
                     </Button>
                     <BannerContent>
-                      But Nxt Watch Premium prepaid plans with UPI
+                      Buy Nxt Watch Premium prepaid plans with UPI
                     </BannerContent>
                     <Button>GET IT NOW</Button>
-                  </Div>
-                </Banner>
+                  </Banner>
+                </Div>
               )}
               <Content dark={value.dark}>
-                <SearchBox dark={value.dark}>
+                <SearchBox as="form" dark={value.dark}>
                   <Input
                     value={searchVal}
                     onChange={this.search}
@@ -186,7 +194,15 @@ class Home extends Component {
                     dark={value.dark}
                     id="search"
                   />
-                  <Button as="label" htmlFor="search" dark={value.dark} search>
+                  <Button
+                    as="label"
+                    htmlFor="search"
+                    data-testid="searchButton"
+                    type="submit"
+                    onClick={this.submitForm}
+                    dark={value.dark}
+                    search
+                  >
                     <IoSearch />
                   </Button>
                 </SearchBox>
@@ -196,7 +212,7 @@ class Home extends Component {
           </Layout>
         )}
       </ThemeContext.Consumer>
-    );
+    )
   }
 }
-export default Home;
+export default Home

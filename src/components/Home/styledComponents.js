@@ -1,49 +1,33 @@
-import styled from "styled-components";
-import Loader from "react-loader-spinner";
+import styled from 'styled-components'
+import Loader from 'react-loader-spinner'
 
 export const OuterContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100vh;
   background-color: #f8fafc;
-`;
+  overflow: auto;
+`
 export const Banner = styled.div`
-  ::before {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: url("https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png")
-      0 0 no-repeat;
-    background-position: 40% center;
-    background-size: cover;
-  }
-  ::after {
-    content: "";
-    width: 100%;
-    background-color: white;
-    height: 100%;
-    z-index: -2;
-  }
-  z-index: 1;
-  overflow: hidden;
+  background-image: url('https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png');
+  background-position: center;
+  background-size: cover;
+  padding: 30px;
   position: relative;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-`;
+`
 export const Div = styled.div`
-  padding: 15px;
-`;
+  background-color: white;
+`
 export const Image = styled.img`
   max-width: 120px;
-  ${(props) => props.noVideo && "width: 250px; max-width: 100%;"}
-`;
+  ${props => props.noVideo && 'width: 250px; max-width: 100%;'}
+`
 export const BannerContent = styled.p`
   max-width: 40%;
-`;
+`
 export const Button = styled.button`
   width: fit-content;
   background-color: transparent;
@@ -54,35 +38,40 @@ export const Button = styled.button`
   margin-top: 20px;
   cursor: pointer;
   outline: none;
-  ${(props) =>
-    props.close
-      ? "padding: 0;margin: 0; position: absolute; left: 95%; top: 10px; border: none;"
-      : props.search && props.dark
-      ? "border-width: 0; padding: 5px 15px; margin: 0; background-color: #666666; color: #212121"
-      : props.search
-      ? "border: none; padding: 5px 15px; margin: 0; background-color: #ebebeb;"
-      : props.retry
-      ? "border-radius: 5px; padding: 10px 25px; border: none; background-color: #4f46e5; color: #f1f1f1; font-weight: bold; letter-spacing: 0.2px;"
-      : ""}
-`;
+  ${props =>
+    props.close &&
+    'padding: 0; margin: 0; position: absolute; left: 95%; top: 15%; border: none;'}
+  ${props =>
+    props.search && props.dark
+      ? 'border-width: 0; padding: 5px 15px; margin: 0; background-color: #666666; color: #212121'
+      : ''}
+  ${props =>
+    props.search
+      ? 'border: none; padding: 5px 15px; margin: 0; background-color: #ebebeb;'
+      : ''}
+  ${props =>
+    props.retry
+      ? 'border-radius: 5px; padding: 10px 25px; border: none; background-color: #4f46e5; color: #f1f1f1; font-weight: bold; letter-spacing: 0.2px;'
+      : ''}
+`
 export const Content = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  ${(props) => props.dark && "background-color: black;"}
-`;
+  ${props => props.dark && 'background-color: black;'}
+`
 export const SearchBox = styled.div`
   display: flex;
   align-items: center;
   width: min(100%, 300px);
   border: 1px solid #cccccc;
   border-radius: 3px;
-  ${(props) => (props.dark ? "border-color: #666666;" : "")}
+  ${props => (props.dark ? 'border-color: #666666;' : '')}
   margin: 15px;
   @media (max-width: 575px) {
     width: calc(100% - 30px);
   }
-`;
+`
 export const Input = styled.input`
   width: 100%;
   border: none;
@@ -90,20 +79,21 @@ export const Input = styled.input`
   padding: 5px 10px;
   background-color: transparent;
   border-radius: 3px 0 0 3px;
-  ${(props) => (props.dark ? "border-color: #666666; color: #cccccc" : "")}
-`;
+  ${props => (props.dark ? 'border-color: #666666; color: #cccccc' : '')}
+`
 export const SearchResults = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
   gap: 20px;
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   min-height: 60%;
   @media (min-width: 576px) {
     padding: 15px;
   }
-`;
+`
 export const ScreenCenterDiv = styled.div`
   display: flex;
   flex-direction: column;
@@ -112,22 +102,22 @@ export const ScreenCenterDiv = styled.div`
   height: 100%;
   width: 100%;
   padding: 40px 4px;
-`;
+`
 export const H1 = styled.h1`
   margin-top: 20px;
   font-size: 1.5rem;
   color: #231f20;
   text-align: center;
-  ${(props) => props.dark && "color: #f1f1f1"}
-`;
+  ${props => props.dark && 'color: #f1f1f1'}
+`
 export const P = styled.p`
   margin-top: 0px;
   margin-bottom: 0px;
   color: #616e7c;
   font-size: 1.2rem;
   text-align: center;
-  ${(props) => props.dark && "color: #64748b"}
-`;
+  ${props => props.dark && 'color: #64748b'}
+`
 export const StyledLoader = styled(Loader)`
-  ${props => props.dark || "filter: invert(1);"}
+  ${props => props.dark || 'filter: invert(1);'}
 `

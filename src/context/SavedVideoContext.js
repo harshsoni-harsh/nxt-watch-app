@@ -1,9 +1,9 @@
-import { createContext } from "react";
+import {createContext} from 'react'
 
 const SavedVideoContext = createContext({
   savedVideos: [],
   onSave: () => {},
   removeSave: () => {},
-});
+})
 
-export default SavedVideoContext;
+export default SavedVideoContext
