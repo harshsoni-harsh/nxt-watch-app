@@ -141,10 +141,10 @@ class VideoItemDetails extends Component {
                 </VideoStats>
               </div>
               <div>
-                <TransparentButton active={like} onClick={this.onLike}>
+                <TransparentButton dark={dark} active={like} onClick={this.onLike}>
                   <BiLike /> Like
                 </TransparentButton>
-                <TransparentButton active={dislike} onClick={this.onDislike}>
+                <TransparentButton dark={dark} active={dislike} onClick={this.onDislike}>
                   <BiDislike /> Dislike
                 </TransparentButton>
                 <SavedVideoContext.Consumer>
@@ -157,7 +157,7 @@ class VideoItemDetails extends Component {
                       else onSave(videoDetails)
                     }
                     return (
-                      <TransparentButton active={saved} onClick={saveVideo}>
+                      <TransparentButton dark={dark} active={saved} onClick={saveVideo}>
                         <FiSave /> {saved ? 'Saved' : 'Save'}
                       </TransparentButton>
                     )

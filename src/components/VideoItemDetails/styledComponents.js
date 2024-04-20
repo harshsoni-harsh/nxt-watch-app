@@ -37,7 +37,8 @@ export const TransparentButton = styled.button`
   gap: 5px;
   cursor: pointer;
   transition-duration: 150ms;
-  ${props => props.active && 'color: #2563eb; '}
+  ${props => props.dark && !props.active && 'filter: brightness(100) '}
+  ${props => props.active && 'color: #bb6325; '}
 `
 export const VideoTitle = styled.p`
   padding: 0 10px;

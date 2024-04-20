@@ -68,7 +68,7 @@ export const Body = styled.div`
   flex-grow: 0;
   display: flex;
   ${props =>
-    props.dark ? 'background-color: #0f0f0f;' : 'background-color: #f9f9f9'}
+    props.dark ? 'background-color: #0f0f0f; color: #ebebeb;' : 'background-color: #f9f9f9'}
 `
 export const StyledHamburger = styled(GiHamburgerMenu)`
   ${props => props.dark && 'color: #ebebeb;'}
